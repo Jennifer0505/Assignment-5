@@ -37,37 +37,8 @@ clean_data <- function(index){
 }
 
 
-data1985 <- clean_data(1)
-data1986 <- clean_data(2)
-data1987 <- clean_data(3)
-data1988 <- clean_data(4)
-data1989 <- clean_data(5)
-data1990 <- clean_data(6)
-data1991 <- clean_data(7)
-data1992 <- clean_data(8)
-data1993 <- clean_data(9)
-data1994 <- clean_data(10)
-data1995 <- clean_data(11)
-data1996 <- clean_data(12)
-data1997 <- clean_data(13)
-data1998 <- clean_data(14)
-data1999 <- clean_data(15)
-data2001 <- clean_data(17)
-data2002 <- clean_data(18)
-data2003 <- clean_data(19)
-data2004 <- clean_data(20)
-data2005 <- clean_data(21)
-data2006 <- clean_data(22)
-data2007 <- clean_data(23)
-data2008 <- clean_data(24)
-data2009 <- clean_data(25)
-data2010 <- clean_data(26)
-data2011 <- clean_data(27)
-data2014 <- clean_data(30)
-data2015 <- clean_data(31)
-data2016 <- clean_data(32)
-data2017 <- clean_data(33)
-wholedata<-rbind(clean_data(1),clean_data(2),clean_data(3),clean_data(4),clean_data(5),clean_data(6),clean_data(7),clean_data(8),clean_data(9),clean_data(10),clean_data(11),clean_data(12),clean_data(13),clean_data(14),clean_data(15),clean_data(17),clean_data(18),clean_data(19),clean_data(20),clean_data(21),clean_data(22),clean_data(23),clean_data(24),clean_data(25),clean_data(26),clean_data(27),clean_data(30),clean_data(31),clean_data(32),clean_data(33))
+wholedata<-read.csv("wholedata.csv")
+wholedata <-wholedata[,-1]
 wholedata <- wholedata[-c(3625, 4420, 4421), ]
 
 #ATMP
