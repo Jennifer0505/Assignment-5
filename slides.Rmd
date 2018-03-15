@@ -1,0 +1,109 @@
+---
+title: "Weather station 46035"
+author: "Yuehan Xiao & XuXu"
+date: "3/15/2018"
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+``````{r include=FALSE, cache=FALSE}
+
+library(tidyverse)
+library(tidyr)
+library(stringr)
+library(dplyr)
+library(plyr)
+
+```
+
+
+##Premise
+
+Since all air temperature and water temperature information for 2012 are recorded as 999.0, which means that these information we want are missing, so we no longer consider 2012 in our investigation. We can't find record of year 2013 from the website, so we decide to skip it. It's unable to read 2000's table, so we don't use this year. Therefore, we use the data from 1985 to 2017 except year 2000, 2012, 2013 to compute the time series.
+
+##Air Temperature's Time Series Plot
+
+```{r, echo=FALSE}
+
+
+# combined all the cleaned data into a csv file
+wholedata<-read.csv("wholedata.csv")
+wholedata <-wholedata[,-1]
+wholedata <- wholedata[-c(3625, 4420, 4421), ]
+
+#ATMP
+whole_data_ATMP <- wholedata[1:3]
+whole_data_ATMP <- whole_data_ATMP<-spread(whole_data_ATMP, key = MM_DD, value = ATMP)
+
+
+#Air temperature Time series plot
+row.names(whole_data_ATMP) <- whole_data_ATMP[,1]
+whole_data_ATMP<-whole_data_ATMP[,-1]
+ts1 <- as.vector(t(whole_data_ATMP[,-1]))
+ts2 <- ts(rev(ts1), start= c(1985,1), end=c(2017,12),frequency=12)
+ts3 <- ts.plot(ts2, gpars=list(xlab="year", ylab="Air_Temperature", lty=c(1:3)),col='purple')
+```
+
+##Water Temperature Time Series Plot
+
+``````{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+#WTMP
+whole_data_WTMP <- cbind(wholedata[1:2], wholedata[4])
+whole_data_WTMP <- whole_data_WTMP<-spread(whole_data_WTMP, key = MM_DD, value = WTMP)
+
+#Water temperature Time series plot
+row.names(whole_data_WTMP) <- whole_data_WTMP[,1]
+whole_data_WTMP<-whole_data_WTMP[,-1]
+ts4 <- as.vector(t(whole_data_WTMP[,-1]))
+ts5 <- ts(rev(ts4), start= c(1985,1), end=c(2017,12),frequency=12)
+ts6 <- ts.plot(ts5, gpars=list(xlab="year", ylab="Water_Temperature", lty=c(1:3)),col='blue')
+```
+
+## Plot Between Water Temperature and Air Temperature
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=wholedata) +
+  geom_smooth(mapping = aes(x=ATMP, y=WTMP))
+```
+
+According to the plot, there is a positive relationship between air temperature and water temperature.
+
+##Significance on Water Temperature Change over 30 years
+
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=10)}
+wholedata_WTMP_Linear <- cbind(wholedata[1:2], wholedata[4])
+WTMP_Linear<- lm(WTMP ~  YYYY,data=wholedata_WTMP_Linear)
+plot(WTMP ~ YYYY, data=wholedata_WTMP_Linear)
+abline(lm(wholedata_WTMP_Linear$WTMP~wholedata_WTMP_Linear$YYYY))
+```
+
+##Water Temperature Part 2
+
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=10)}
+summary(WTMP_Linear)
+```
+Since p value is smaller than 2.2e-16, which is smaller than alpha 0.05, so the change of the mean water temperature over past 30 years is significant.
+
+##Significance on Air Temperature Change over 30 years
+
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=10)}
+wholedata_ATMP_Linear <- cbind(wholedata[1:3])
+ATMP_Linear <- lm(ATMP~YYYY, data=wholedata_ATMP_Linear)
+plot(ATMP~YYYY, data=wholedata_ATMP_Linear)
+abline(lm(wholedata_ATMP_Linear$ATMP~wholedata_ATMP_Linear$YYYY))
+```
+
+##Air Temperature Part 2
+
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=10)}
+summary(ATMP_Linear)
+```
+Since the p value is smaller than 2.2e-16, which is smaller than alpha 0.05, so the change of the mean air temperature over past 30 years is significant.
+
+## Influence of the Sampling 
+
+Whether our sampling of choosing one sample per day affects our evaluation of temperature change or not depends on the trend of the temperature within this specific area. If the temperature over the whole day is moderately stable,we can approxiamately regard the temperature at 12pm at each single day as the average temperature over the whole day. In this case, the sampling method does not affect our evaluation of temperature change much. However, if there exists large varaitions in temperature over the whole day, the temperature at 12pm can not be regarded as a reasonable respresentation of the average temperature of each single day. In this case,our sampling method affects the evaluation of temperature change a lot.
