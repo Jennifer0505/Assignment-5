@@ -1,0 +1,83 @@
+---
+title: "Chemical Evaluation"
+author: "Yuehan Xiao & Xu Xu"
+date: "3/17/2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+``````{r include=FALSE, cache=FALSE}
+
+library(tidyverse)
+library(readxl)
+
+```
+
+
+
+
+##28 Unique Chemical
+
+```{r, echo=FALSE,message=FALSE, warning=FALSE}
+veg.1 <- read_xlsx("veg1.xlsx")
+c <- apply(veg.1, 2, n_distinct)
+c <- c[c>1]
+d <- names(c[c==1])
+e <- names(c[c>1])
+veg.2 <- select(veg.1, e)
+cnames.2 <- colnames(veg.2)
+
+veg.3 <- dplyr::rename(veg.2, 
+                       Geo = `Geo Level`, 
+                       State = `State ANSI`,
+                       Data = `Data Item`,
+                       Category = `Domain Category`)
+
+cnames.3 <- colnames(veg.3)
+
+
+yy <- separate(veg.3, Category, into = c("label", "quant"), sep=",")
+ru <- filter(yy, label=="RESTRICTED USE CHEMICAL")
+
+ru1 <- ru %>% select(label, quant) %>% unique()
+print(ru1, n=7)
+
+```
+Initially, we select 28 unique restricted used chemicals in order to find their corresponding cas codes and LD50 values (filtering by species-rat, study type-oral and averaging the toxicity value)
+
+##LD50 
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+Toxicity<-read_xlsx("Toxicity_Tidy_Table.xlsx")
+print(Toxicity, n=2)
+
+```
+There are total 63 observations and 9 variables in the clean1 data frame.We seperate 5 methods into 5 column. A represents " APPLICATIONS, MEASURED IN LB"; B represents " APPLICATIONS, MEASURED IN LB / ACRE / APPLICATION, AVG" ; C represents " APPLICATIONS, MEASURED IN LB / ACRE / YEAR, AVG"; D represents " APPLICATIONS, MEASURED IN NUMBER, AVG"; E represents " TREATED, MEASURED IN PCT OF AREA PLANTED, AVG". Additionly, we add a column of LD50 which includes the LD50 values for corresponding chemicals.The Toxicity data frame is the new complete tidy data frame.
+
+
+##Method A (APPLICATIONS, MEASURED IN LB) Value Versus LD50 
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+plot(Toxicity$LD50, Toxicity$A)
+```
+
+##Method B (APPLICATIONS, MEASURED IN LB / ACRE / APPLICATION, AVG) Value Versus LD50 
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+plot(Toxicity$LD50, Toxicity$B)
+```
+
+##Method C (APPLICATIONS, MEASURED IN LB / ACRE / YEAR, AVG) Value Versus LD50 
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+plot(Toxicity$LD50, Toxicity$C)
+```
+
+##Method D (APPLICATIONS, MEASURED IN NUMBER, AVG) Value Versus LD50 
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+plot(Toxicity$LD50, Toxicity$D)
+```
+
+##Method E (TREATED, MEASURED IN PCT OF AREA PLANTED, AVG) Value Versus LD50 
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+plot(Toxicity$LD50, Toxicity$E)
+```
