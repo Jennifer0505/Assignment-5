@@ -81,3 +81,5 @@ plot(Toxicity$LD50, Toxicity$D)
 ```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
 plot(Toxicity$LD50, Toxicity$E)
 ```
+## Relationship Between Chemical Usage and LD50
+Chemical Usages and LD50 doesn't have a strong relationship. This is predictable because LD50 represents the amount of a toxic agent that is sufficient to kill 50 percent of a population of animal within a certain time compare to Chemical Usage, which refers to the average number of pounds of pesticide active ingredient applied to an acre of land. However, through plots, it might indicate that the higher the LD50 the lower the Chemical Usage but this still needs further investigation.  
