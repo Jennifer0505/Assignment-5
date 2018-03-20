@@ -85,8 +85,8 @@ ts6 <- ts.plot(ts5, gpars=list(xlab="year", ylab="Water_Temperature", lty=c(1:3)
 
 # Plot between water temperature and air temperature 
 
-ggplot(data=wholedata) +
-  geom_smooth(mapping = aes(x=ATMP, y=WTMP))
+plot(wholedata$ATMP, wholedata$WTMP)
+abline(lm(wholedata$ATMP ~ wholedata$WTMP))
 
 #so according to the plot, there is a positive relationship between air temperature and water temperature. 
 
@@ -112,4 +112,8 @@ abline(lm(wholedata_ATMP_Linear$ATMP~wholedata_ATMP_Linear$YYYY))
 #However, if there exists large varaitions in temperature over the whole day, the temperature at 12pm can not be regarded as a reasonable respresentation of the average temperature of each single day. In this case, 
 #our sampling method affects the evaluation of temperature change a lot.
 
+write.csv(whole_data_ATMP, file = 'whole_data_ATMP.csv')
+write.csv(whole_data_WTMP, file = 'whole_data_WTMP.csv')
+write.csv(wholedata_ATMP_Linear, file = 'wholedata_ATMP_Linear.csv')
+write.csv(wholedata_WTMP_Linear, file= 'wholedata_WTMP_Linear.csv')
 

@@ -3,6 +3,11 @@ library(shinydashboard)
 library(shiny)
 library(ggplot2)
 
+wholedata<-read.csv("wholedata.csv", header=TRUE)
+whole_data_ATMP <- read.csv(file="whole_data_ATMP.csv", header=TRUE)
+whole_data_WTMP <- read.csv(file="whole_data_WTMP.csv", header=TRUE)
+wholedata_ATMP_Linear <- read.csv(file="wholedata_ATMP_Linear.csv", header=TRUE)
+wholedata_WTMP_Linear <- read.csv(file="wholedata_WTMP_Linear.csv", header=TRUE)
 
 ui <- dashboardPage(
   dashboardHeader(title = "Temperature Change"),
@@ -58,8 +63,8 @@ server <- function(input, output) {
     ts6 <- ts.plot(ts5, gpars=list(xlab="year", ylab="Water_Temperature", lty=c(1:3)),col='blue')
   })
   output$plot3 <- renderPlot({
-    ggplot(data=wholedata) +
-      geom_smooth(mapping = aes(x=ATMP, y=WTMP))
+    plot(wholedata$ATMP, wholedata$WTMP)
+    abline(lm(wholedata$ATMP ~ wholedata$WTMP))
   })
   output$plot4 <- renderPlot({
     plot(WTMP ~ YYYY, data=wholedata_WTMP_Linear)
@@ -73,3 +78,4 @@ server <- function(input, output) {
 
 
 shinyApp(ui, server)
+

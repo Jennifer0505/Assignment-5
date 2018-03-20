@@ -1,5 +1,12 @@
 library(shiny)
 library(shinydashboard)
+library(readxl)
+
+Toxicity<-read_xlsx("Toxicity_Tidy_Table.xlsx")
+Year_2006 <- read.csv(file="Year_2006.csv", header=TRUE)
+Year_2010 <- read.csv(file="Year_2010.csv", header=TRUE)
+Year_2014 <- read.csv(file="Year_2014.csv", header=TRUE)
+Year_2016 <- read.csv(file="Year_2016.csv", header=TRUE)
 
 ui <- dashboardPage(
   dashboardHeader(title = "Chemical Evaluation"),
@@ -92,19 +99,15 @@ server <- function(input, output) {
     plot(Toxicity$LD50, Toxicity$A)
   })
   output$plot11 <- renderPlot({
-    Year_2006 <- filter(Toxicity, Year == "2006")
     plot(Year_2006$LD50, Year_2006$A)
   })
   output$plot12 <- renderPlot({
-    Year_2010 <- filter(Toxicity, Year == "2010")
     plot(Year_2010$LD50, Year_2010$A)
   })
   output$plot13 <- renderPlot({
-    Year_2014 <- filter(Toxicity, Year == "2014")
     plot(Year_2014$LD50, Year_2014$A)
   })
   output$plot14 <- renderPlot({
-    Year_2016 <- filter(Toxicity, Year == "2016")
     plot(Year_2016$LD50, Year_2016$A)
   })
   
@@ -112,19 +115,15 @@ server <- function(input, output) {
     plot(Toxicity$LD50, Toxicity$B)
   })
   output$plot21 <- renderPlot({
-    Year_2006 <- filter(Toxicity, Year == "2006")
     plot(Year_2006$LD50, Year_2006$B)
   })
   output$plot22 <- renderPlot({
-    Year_2010 <- filter(Toxicity, Year == "2010")
     plot(Year_2010$LD50, Year_2010$B)
   })
   output$plot23 <- renderPlot({
-    Year_2014 <- filter(Toxicity, Year == "2014")
     plot(Year_2014$LD50, Year_2014$B)
   })
   output$plot24 <- renderPlot({
-    Year_2016 <- filter(Toxicity, Year == "2016")
     plot(Year_2016$LD50, Year_2016$B)
   })
   
@@ -133,19 +132,15 @@ server <- function(input, output) {
     plot(Toxicity$LD50, Toxicity$C)
   })
   output$plot31 <- renderPlot({
-    Year_2006 <- filter(Toxicity, Year == "2006")
     plot(Year_2006$LD50, Year_2006$C)
   })
   output$plot32 <- renderPlot({
-    Year_2010 <- filter(Toxicity, Year == "2010")
     plot(Year_2010$LD50, Year_2010$C)
   })
   output$plot33 <- renderPlot({
-    Year_2014 <- filter(Toxicity, Year == "2014")
     plot(Year_2014$LD50, Year_2014$C)
   })
   output$plot34 <- renderPlot({
-    Year_2016 <- filter(Toxicity, Year == "2016")
     plot(Year_2016$LD50, Year_2016$C)
   })
   
@@ -153,19 +148,15 @@ server <- function(input, output) {
     plot(Toxicity$LD50, Toxicity$D)
   })
   output$plot41 <- renderPlot({
-    Year_2006 <- filter(Toxicity, Year == "2006")
     plot(Year_2006$LD50, Year_2006$D)
   })
   output$plot42 <- renderPlot({
-    Year_2010 <- filter(Toxicity, Year == "2010")
     plot(Year_2010$LD50, Year_2010$D)
   })
   output$plot43 <- renderPlot({
-    Year_2014 <- filter(Toxicity, Year == "2014")
     plot(Year_2014$LD50, Year_2014$D)
   })
   output$plot44 <- renderPlot({
-    Year_2016 <- filter(Toxicity, Year == "2016")
     plot(Year_2016$LD50, Year_2016$D)
   })
   
@@ -173,21 +164,18 @@ server <- function(input, output) {
     plot(Toxicity$LD50, Toxicity$E)
   })
   output$plot51 <- renderPlot({
-    Year_2006 <- filter(Toxicity, Year == "2006")
     plot(Year_2006$LD50, Year_2006$E)
   })
   output$plot52 <- renderPlot({
-    Year_2010 <- filter(Toxicity, Year == "2010")
     plot(Year_2010$LD50, Year_2010$E)
   })
   output$plot53 <- renderPlot({
-    Year_2014 <- filter(Toxicity, Year == "2014")
     plot(Year_2014$LD50, Year_2014$E)
   })
   output$plot54 <- renderPlot({
-    Year_2016 <- filter(Toxicity, Year == "2016")
     plot(Year_2016$LD50, Year_2016$E)
   })
 }
 
 shinyApp(ui, server)
+

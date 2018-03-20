@@ -1,0 +1,12 @@
+name: part1_shiney
+title: part1_shiney
+username:
+account: xuxusissi
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 301113
+bundleId: 1277587
+url: https://xuxusissi.shinyapps.io/part1_shiney/
+when: 1521506597.90316
+asMultiple: FALSE
+asStatic: FALSE

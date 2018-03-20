@@ -146,3 +146,7 @@ plot(Year_2014$LD50, Year_2014$E)
 Year_2016 <- filter(Toxicity, Year == "2016")
 plot(Year_2016$LD50, Year_2016$E)
 
+write.csv(Year_2006, file = 'Year_2006.csv')
+write.csv(Year_2010, file = 'Year_2010.csv')
+write.csv(Year_2014, file = 'Year_2014.csv')
+write.csv(Year_2016, file= 'Year_2016.csv')

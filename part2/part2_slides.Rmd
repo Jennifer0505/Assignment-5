@@ -49,7 +49,7 @@ print(ru1, n=7)
 Initially, we select 28 unique restricted used chemicals in order to find their corresponding cas codes and LD50 values (filtering by species-rat, study type-oral and averaging the toxicity value)
 
 ##LD50 
-```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 Toxicity<-read_xlsx("Toxicity_Tidy_Table.xlsx")
 print(Toxicity, n=2)
 
@@ -81,3 +81,40 @@ plot(Toxicity$LD50, Toxicity$D)
 ```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
 plot(Toxicity$LD50, Toxicity$E)
 ```
+
+## Relationship Between Chemical Usage and LD50
+Chemical Usage and LD50 do not have a strong relationship. This is reasonable because LD50 represents the amount of a toxic agent that is sufficient to kill 50 percent of a population of animal within a certain time and Chemical Usage, which refers to the average number of pounds of pesticide active ingredient applied to an acre of land, and this two parameters do not have any logical realtion. However, the plots might indicate that the higher the LD50 the lower the Chemical Usage, but this still needs further investigation.
+
+##Vegetable: Method A (APPLICATIONS, MEASURED IN LB) Value Versus LD50 
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+ggplot(data = Toxicity) + 
+  geom_point(mapping = aes(x =LD50 , y = order(A), color=Commodity))
+```
+
+##Vegetable: Method B (APPLICATIONS, MEASURED IN LB / ACRE / APPLICATION, AVG) Value Versus LD50
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+ggplot(data = Toxicity) + 
+  geom_point(mapping = aes(x =LD50 , y = B, color=Commodity))
+```
+
+## Vegetable: Method C (APPLICATIONS, MEASURED IN LB / ACRE / YEAR, AVG) Value Versus LD50 
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+ggplot(data = Toxicity) + 
+  geom_point(mapping = aes(x =LD50 , y = C, color=Commodity))
+```
+
+##Method D (APPLICATIONS, MEASURED IN NUMBER, AVG) Value Versus LD50 
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+ggplot(data = Toxicity) + 
+  geom_point(mapping = aes(x =LD50 , y = D, color=Commodity))
+```
+
+##Method E (TREATED, MEASURED IN PCT OF AREA PLANTED, AVG) Value Versus LD50 
+```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.height=4, fig.width=8}
+ggplot(data = Toxicity) + 
+  geom_point(mapping = aes(x =LD50 , y = order(E), color=Commodity))
+
+```
+
+## Relationship Between Chemical Usage and LD50 Among Vegetables
+In general, Broccoli has larger value of LD50 than Cauliflower, which means Broccoli contains more toxicity. So it is healthier to buy more Cauliflower than Broccoli. However, this difference is subtle and needs further investigation.
