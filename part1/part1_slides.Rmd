@@ -72,6 +72,9 @@ ggplot(data=wholedata) +
 
 According to the plot, there is a positive relationship between air temperature and water temperature.
 
+##Significance Test on Temperature Change 
+For both water mean temperature and air mean temperature, we decided to use the linear regression to compare the mean temperature change over 30 years. Since the comparison is over 30 years, we could not simply do a pairwise t-test to compare the change of the mean. 
+
 ##Significance on Water Temperature Change over 30 years
 
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=10)}
@@ -87,6 +90,8 @@ abline(lm(wholedata_WTMP_Linear$WTMP~wholedata_WTMP_Linear$YYYY))
 summary(WTMP_Linear)
 ```
 Since p value is smaller than 2.2e-16, which is smaller than alpha 0.05, so the change of the mean water temperature over past 30 years is significant.
+
+
 
 ##Significance on Air Temperature Change over 30 years
 
